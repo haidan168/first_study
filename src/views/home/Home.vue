@@ -7,7 +7,7 @@
     <tab-control class="tab-control"
                  :titles="['流行','新款','精选']"
                  @typeClick="typeClick" />
-    <goods-list :goods="goods[currentType].list" />
+    <goods-list :goods="realType" />
 
     <ul>
       <li>1</li>
@@ -114,6 +114,10 @@ export default {
         'sell': { page: 0, list: [] }
       },
       currentType: 'pop'
+    }
+  }, computed: {
+    realType () {
+      return this.goods[this.currentType].list;
     }
   },
   created () {
