@@ -2,7 +2,8 @@
   <div class="good-list-item">
     <a :href="goodsItem.link">
       <img :src="goodsItem.show.img"
-           alt="">
+           alt=""
+           @load="goodsImgLoad">
     </a>
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
@@ -21,6 +22,13 @@ export default {
       default () {
         return {}
       }
+    }
+  },
+  methods: {
+    goodsImgLoad () {
+      // console.log('----');
+      // 图片加载完成后向事件总线发射 itemImgLoad 事件
+      this.$bus.$emit('itemImgLoad');
     }
   }
 }
