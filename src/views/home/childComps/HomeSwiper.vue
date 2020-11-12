@@ -4,7 +4,8 @@
                  :key="index">
       <a :href="item.link">
         <img :src="item.image"
-             alt="">
+             alt=""
+             @load="imageLoad">
       </a>
     </swiper-item>
   </swiper>
@@ -22,9 +23,24 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      isLoad: false
+    }
+  },
   components: {
     Swiper,
     SwiperItem
+  },
+  methods: {
+    // 监听轮播图加载是否完成
+    imageLoad () {
+      // 判断是否将事件发出
+      if (!this.isLoad) {
+        this.$emit('swiperImageLoad');
+        this.isLoad = true;
+      }
+    }
   }
 }
 </script>
