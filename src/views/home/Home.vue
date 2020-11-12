@@ -129,7 +129,6 @@ export default {
     // 获取 tabControl 的 offsetTop
     swiperImageLoad () {
       this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
-      console.log(this.tabOffsetTop);
     },
 
     /**

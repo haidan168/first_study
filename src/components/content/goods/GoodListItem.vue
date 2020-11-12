@@ -1,10 +1,9 @@
 <template>
-  <div class="good-list-item">
-    <a :href="goodsItem.link">
-      <img :src="goodsItem.show.img"
-           alt=""
-           @load="goodsImgLoad">
-    </a>
+  <div class="good-list-item"
+       @click="itemClick">
+    <img :src="goodsItem.show.img"
+         alt=""
+         @load="goodsImgLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -29,6 +28,9 @@ export default {
       // console.log('----');
       // 图片加载完成后向事件总线发射 itemImgLoad 事件
       this.$bus.$emit('itemImgLoad');
+    },
+    itemClick () {
+      this.$router.push('/detail/' + this.goodsItem.iid);
     }
   }
 }
