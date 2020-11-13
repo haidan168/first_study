@@ -26,7 +26,7 @@ export default {
 }
 </script>
 
-<style>
+<style sxoped>
 .recommend {
   display: flex;
   width: 100%;

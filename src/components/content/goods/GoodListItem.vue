@@ -24,11 +24,11 @@ export default {
     }
   },
   methods: {
+    // 图片加载完成后向事件总线发射 itemImgLoad 事件
     goodsImgLoad () {
-      // console.log('----');
-      // 图片加载完成后向事件总线发射 itemImgLoad 事件
       this.$bus.$emit('itemImgLoad');
     },
+    // 点击图片跳转到 detail 页面
     itemClick () {
       this.$router.push('/detail/' + this.goodsItem.iid);
     }
@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .good-list-item {
   padding-bottom: 40px;
   position: relative;
