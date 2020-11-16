@@ -9,32 +9,37 @@
       <detail-goods-info :detail-info="detailInfo"
                          @imageLoad="imageLoad" />
       <detail-param-info :param-info="paramInfo" />
+      <detail-comment-info :commentInfo="commentInfo" />
+      <goods-list :goods="recommends" />
     </scroll>
   </div>
 </template>
 
 <script>
-import Scroll from 'components/common/scroll/Scroll'
-
+import Scroll from 'components/common/scroll/Scroll';
+import GoodsList from '../../components/content/goods/GoodsList';
 
 import DetailNavBar from './childComps/DetailNavBar';
 import DetailSwiper from './childComps/DetailSwiper';
 import DetailBaseInfo from './childComps/DetailBaseInfo.vue';
 import DetailShopInfo from './childComps/DetailShopInfo.vue';
 import DetailGoodsInfo from './childComps/DetailGoodsInfo.vue';
-
-import { getDetail, Goods, Shop, GoodsParam } from '../../network/detail';
 import DetailParamInfo from './childComps/DetailParamInfo.vue';
+import DetailCommentInfo from './childComps/DetailCommentInfo';
+
+import { getDetail, Goods, Shop, GoodsParam, getRecommend } from '../../network/detail';
 export default {
   name: 'Detail',
   components: {
     Scroll,
+    GoodsList,
     DetailNavBar,
     DetailSwiper,
     DetailBaseInfo,
     DetailShopInfo,
     DetailGoodsInfo,
-    DetailParamInfo
+    DetailParamInfo,
+    DetailCommentInfo,
   },
   data () {
     return {
@@ -43,7 +48,9 @@ export default {
       goods: {},
       shop: {},
       detailInfo: {},
-      paramInfo: {}
+      paramInfo: {},
+      commentInfo: {},
+      recommends: []
     }
   },
   created () {
@@ -51,7 +58,6 @@ export default {
     this.iid = this.$route.params.iid;
     // 通过 iid 请求数据
     getDetail(this.iid).then(res => {
-      console.log(res);
       const data = res.result;
       // 获取 topImages 数据
       this.topImages = data.itemInfo.topImages;
@@ -63,7 +69,15 @@ export default {
       this.detailInfo = data.detailInfo;
       // 获取参数信息
       this.paramInfo = new GoodsParam(data.itemParams.info, data.itemParams.rule);
+      // 获取评论信息，判断是否有评论
+      if (data.rate.list) {
+        this.commentInfo = data.rate.list[0];
+      }
     });
+    // 获取评论数据
+    getRecommend().then(res => {
+      this.recommends = res.data.list;
+    })
   },
   methods: {
     // 图片加载完成后进行刷新

@@ -1,7 +1,7 @@
 <template>
   <div class="good-list-item"
        @click="itemClick">
-    <img :src="goodsItem.show.img"
+    <img :src="showImage"
          alt=""
          @load="goodsImgLoad">
     <div class="goods-info">
@@ -21,6 +21,11 @@ export default {
       default () {
         return {}
       }
+    }
+  },
+  computed: {
+    showImage () {
+      return this.goodsItem.image || this.goodsItem.show.img;
     }
   },
   methods: {
