@@ -64,6 +64,10 @@ export default {
     // 重置上拉加载更多
     finishPullUp () {
       this.scroll.finishPullUp();
+    },
+    // 跳到指定位置
+    scrollTo (x, y, time = 400) {
+      this.scroll && this.scroll.scrollTo(x, y, time);
     }
   }
 }

@@ -82,9 +82,6 @@ export default {
     this.getHomeGoods('new');
     this.getHomeGoods('sell');
   },
-  mounted () {
-
-  },
   deactivated () {
     // 取消全局事件的监听
     this.$bus.$off('itemImgLoad', this.itemImgListener);
