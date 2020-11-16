@@ -17,7 +17,7 @@
 
 <script>
 import Scroll from 'components/common/scroll/Scroll';
-import GoodsList from '../../components/content/goods/GoodsList';
+import GoodsList from 'components/content/goods/GoodsList';
 
 import DetailNavBar from './childComps/DetailNavBar';
 import DetailSwiper from './childComps/DetailSwiper';
@@ -27,7 +27,8 @@ import DetailGoodsInfo from './childComps/DetailGoodsInfo.vue';
 import DetailParamInfo from './childComps/DetailParamInfo.vue';
 import DetailCommentInfo from './childComps/DetailCommentInfo';
 
-import { getDetail, Goods, Shop, GoodsParam, getRecommend } from '../../network/detail';
+import { getDetail, Goods, Shop, GoodsParam, getRecommend } from 'network/detail';
+import { itemImgLinsterMinIn } from 'common/mixin'
 export default {
   name: 'Detail',
   components: {
@@ -41,6 +42,7 @@ export default {
     DetailParamInfo,
     DetailCommentInfo,
   },
+  mixins: [itemImgLinsterMinIn],
   data () {
     return {
       iid: null,
@@ -78,6 +80,9 @@ export default {
     getRecommend().then(res => {
       this.recommends = res.data.list;
     })
+  },
+  destroyed () {
+    this.$bus.$off('itemImgLoad', this.itemImgListener);
   },
   methods: {
     // 图片加载完成后进行刷新

@@ -40,6 +40,7 @@ import BackTop from 'components/content/backTop/BackTop'
 
 import { getHomeMultidata, getHomeGoods } from 'network/home'
 import { debounce } from 'common/utils'
+import { itemImgLinsterMinIn } from '../../common/mixin'
 
 export default {
   name: 'Home',
@@ -53,6 +54,7 @@ export default {
     Scroll,
     BackTop
   },
+  mixins: [itemImgLinsterMinIn],
   data () {
     return {
       banners: [],
@@ -81,12 +83,11 @@ export default {
     this.getHomeGoods('sell');
   },
   mounted () {
-    // 调用防抖函数，防止刷新频繁
-    const refresh = debounce(this.$refs.scroll.refresh, 100);
-    // 监听事件总线中的 itemImgLoad 事件
-    this.$bus.$on('itemImgLoad', () => {
-      refresh();
-    });
+
+  },
+  deactivated () {
+    // 取消全局事件的监听
+    this.$bus.$off('itemImgLoad', this.itemImgListener);
   },
   methods: {
     /**
