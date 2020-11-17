@@ -18,6 +18,9 @@
       <goods-list ref="recommend"
                   :goods="recommends" />
     </scroll>
+    <back-top @click.native="backTopClick"
+              v-show="isShowBackTop" />
+    <detail-bottom-bar />
   </div>
 </template>
 
@@ -32,9 +35,10 @@ import DetailShopInfo from './childComps/DetailShopInfo.vue';
 import DetailGoodsInfo from './childComps/DetailGoodsInfo.vue';
 import DetailParamInfo from './childComps/DetailParamInfo.vue';
 import DetailCommentInfo from './childComps/DetailCommentInfo';
+import DetailBottomBar from './childComps/DetailBottomBar.vue';
 
 import { getDetail, Goods, Shop, GoodsParam, getRecommend } from 'network/detail';
-import { itemImgLinsterMinIn } from 'common/mixin'
+import { itemImgLinsterMinIn, backTopMinin } from 'common/mixin'
 export default {
   name: 'Detail',
   components: {
@@ -47,8 +51,9 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    DetailBottomBar,
   },
-  mixins: [itemImgLinsterMinIn],
+  mixins: [itemImgLinsterMinIn, backTopMinin],
   data () {
     return {
       iid: null,
@@ -128,6 +133,8 @@ export default {
           this.$refs.detailNavBar.currentIndex = this.currentIndex;
         }
       }
+
+      this.linseBackTop(position);
     }
   }
 }
@@ -141,7 +148,7 @@ export default {
   height: 100vh;
 }
 .content {
-  height: calc(100% - 44px);
+  height: calc(100% - 44px - 58px);
   overflow: hidden;
 }
 </style>

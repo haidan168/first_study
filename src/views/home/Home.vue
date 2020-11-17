@@ -36,11 +36,10 @@ import NavBar from 'components/common/navbar/NavBar'
 import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from 'components/content/goods/GoodsList'
 import Scroll from 'components/common/scroll/Scroll'
-import BackTop from 'components/content/backTop/BackTop'
 
 import { getHomeMultidata, getHomeGoods } from 'network/home'
 import { debounce } from 'common/utils'
-import { itemImgLinsterMinIn } from '../../common/mixin'
+import { itemImgLinsterMinIn, backTopMinin } from 'common/mixin'
 
 export default {
   name: 'Home',
@@ -51,10 +50,9 @@ export default {
     NavBar,
     TabControl,
     GoodsList,
-    Scroll,
-    BackTop
+    Scroll
   },
-  mixins: [itemImgLinsterMinIn],
+  mixins: [itemImgLinsterMinIn, backTopMinin],
   data () {
     return {
       banners: [],
@@ -65,11 +63,11 @@ export default {
         'sell': { page: 0, list: [] }
       },
       currentType: 'pop',
-      isShowBackTop: false,
       tabOffsetTop: 0,
       isFixedTabControl: false
     }
-  }, computed: {
+  },
+  computed: {
     realType () {
       return this.goods[this.currentType].list;
     }
@@ -106,14 +104,9 @@ export default {
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
     },
-    // 点击返回顶部
-    backTopClick () {
-      this.$refs.scroll.backTop(0, 0);
-    },
     // 控制 scroll
     contentScroll (position) {
-      // 控制 BackTop 按钮的显示
-      this.isShowBackTop = (-position.y) > 1000;
+      this.linseBackTop(position);
       // 控制 tab-control 是否固定
       this.isFixedTabControl = (-position.y) > this.tabOffsetTop;
     },
