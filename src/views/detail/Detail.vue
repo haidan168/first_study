@@ -6,6 +6,10 @@
             ref="scroll"
             :probe-type="3"
             @scroll="contentScroll">
+      <ul>
+        <li v-for="(item,index) in $store.state.cartList"
+            :key="index">{{item}}</li>
+      </ul>
       <detail-swiper :topImages="topImages" />
       <detail-base-info :goods="goods" />
       <detail-shop-info :shop="shop" />
@@ -20,7 +24,7 @@
     </scroll>
     <back-top @click.native="backTopClick"
               v-show="isShowBackTop" />
-    <detail-bottom-bar />
+    <detail-bottom-bar @addToCart="addToCart" />
   </div>
 </template>
 
@@ -135,6 +139,16 @@ export default {
       }
 
       this.linseBackTop(position);
+    },
+    // 添加购物车
+    addToCart () {
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.realPrice;
+      product.iid = this.iid;
+      this.$store.dispatch('addCart', product);
     }
   }
 }
