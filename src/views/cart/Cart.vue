@@ -9,12 +9,15 @@
 <script>
 import NavBar from 'components/common/navbar/NavBar.vue'
 
+// 辅助函数，将 store 中的 getter 映射到局部计算属性
 import { mapGetters } from 'vuex'
 export default {
   components: { NavBar },
   name: 'Cart',
   computed: {
-    // ...mapGetters(['cartLength', 'cartList'])
+    // 使用对象展开运算符
+    //...mapGetters(['cartLength', 'cartList'])
+    // 使用对象形式，给 getter 另取一个名称
     ...mapGetters({
       length: 'cartLength',
       list: 'cartList'
