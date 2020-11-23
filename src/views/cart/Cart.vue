@@ -1,18 +1,24 @@
 <template>
   <div class="cart">
-    <nav-bar>
+    <nav-bar class="nav-bar">
       <div slot="center">购物车({{length}})</div>
     </nav-bar>
+    <cart-list></cart-list>
   </div>
 </template>
 
 <script>
 import NavBar from 'components/common/navbar/NavBar.vue'
 
+import CartList from './childComps/CartList.vue'
+
 // 辅助函数，将 store 中的 getter 映射到局部计算属性
 import { mapGetters } from 'vuex'
 export default {
-  components: { NavBar },
+  components: {
+    NavBar,
+    CartList
+  },
   name: 'Cart',
   computed: {
     // 使用对象展开运算符
@@ -27,7 +33,7 @@ export default {
 </script>
 
 <style scoped>
-.cart {
+.nav-bar {
   background: var(--color-tint);
   color: #fff;
   font-size: 18px;
